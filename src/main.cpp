@@ -113,9 +113,13 @@ void loop(void) {
       // NTAG 203       42      4             39
       // NTAG 213       45      4             39
       // NTAG 215       135     4             129
-      // NTAG 216       231     4             225      
-      byte pwd[] = {0xFF, 0xFF, 0xFF, 0xFF};
-      byte result = nfc.ntag2xx_Authenticate(pwd);
+      // NTAG 216       231     4             225 
+
+      uint8_t writerData[4] = { 'C', 'C', 'H', 'S' };
+
+      uint8_t blankData[4] = { 0, 0, 0, 0 };
+
+      uint8_t result = nfc.ntag2xx_Authenticate(writerData);
 
       if (result) {
         Serial.println("ntag2xx_authenticate worked!");
@@ -124,8 +128,39 @@ void loop(void) {
         Serial.println("ntag2xx_authenticate failed!");
       }
 
+      //133 is the page of the password on the NTAG 215
+      // uint8_t res = nfc.ntag2xx_WritePage(133, writerData);
+      // if (res) {
+      //   Serial.println("ntag2xx_write worked!");
+      // }
+      // else {
+      //   Serial.println("ntag2xx_write failed!");
+      // }
 
-      for (uint8_t i = 0; i < 135; i++) 
+      //Write the Auth Page to activate password protection to write
+      //MIRROR, RFUI, MIRROR_PAGE, AUTH0
+      // uint8_t writerAuth[4] = { 0x04, 0x00, 0x00, 0x04 };
+      // uint8_t res = nfc.ntag2xx_WritePage(131, writerAuth);
+      // if (res) {
+      //   Serial.println("ntag2xx_write worked!");
+      // }
+      // else {
+      //   Serial.println("ntag2xx_write failed!");
+      // }
+
+      //Write the Auth Page to activate password protection to write
+      //Access to make password protection read only
+      // uint8_t writerAuth[4] = { 0x88, 0x00, 0x00, 0x00 };
+      // uint8_t res = nfc.ntag2xx_WritePage(132, writerAuth);
+      // if (res) {
+      //   Serial.println("ntag2xx_write worked!");
+      // }
+      // else {
+      //   Serial.println("ntag2xx_write failed!");
+      // }
+
+
+      for (uint8_t i = 0; i < 42; i++) 
       {
         success = nfc.ntag2xx_ReadPage(i, data);
         

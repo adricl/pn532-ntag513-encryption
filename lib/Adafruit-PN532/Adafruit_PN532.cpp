@@ -1830,7 +1830,7 @@ void Adafruit_PN532::writecommand(uint8_t *cmd, uint8_t cmdlen) {
  @returns 1 if everything executed properly, 0 for an error
  */
 /**************************************************************************/
-uint8_t Adafruit_PN532::ntag2xx_Authenticate(byte * pwd) {
+uint8_t Adafruit_PN532::ntag2xx_Authenticate(uint8_t *pwd) {
   #ifdef MIFAREDEBUG
     PN532DEBUGPRINT.println(F("Attempting ntag2xx_Authenticate: "));
   #endif
